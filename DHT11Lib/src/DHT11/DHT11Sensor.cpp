@@ -1,19 +1,7 @@
 #include "DHT11/DHT11Sensor.h"
-
+#include "DHT11/DHT11Dependencies.h"
 namespace DHT11
 {
-
-    void StartTimer(const uint8_t id);
-    void ResetTimer(const uint8_t id);
-    void StopTimer(const uint8_t id);
-    uint32_t GetTimestampInMicrosecondFromTimer(const uint8_t id);
-    void SetDataPinAsOutput(const uint8_t id);
-    void SetDataPinAsLow(const uint8_t id);
-    void SetDataPinAsHigh(const uint8_t id);
-    void DelayInMillisecond(const uint32_t durationInMillisecond);
-    void SetDataPinAsInput(const uint8_t id);
-    uint8_t ReadDataPin(const uint8_t id);
-
     static constexpr uint8_t HIGH_VALUE = 0x01U;
     static constexpr uint8_t LOW_VALUE = 0x00U;
 

@@ -1,13 +1,9 @@
 #include "TC2004/Lcd.h"
-
+#include "TC2004/TC2004Dependencies.h"
 
 namespace TC2004
 {
     static constexpr uint8_t CLEAR_SCREEN_COMMAND = 0x01U;
-
-    void DelayInMillisecond(const uint32_t durationInMillisecond);
-    bool SendCommand(const uint8_t id, const uint8_t command);
-    bool SendData(const uint8_t id, const uint8_t data);
 
 
     static bool RegisterSpecialCharsForLcd(const uint8_t id);

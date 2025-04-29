@@ -1,13 +1,9 @@
 #include "Eeprom24C/Eeprom24C32.h"
 #include "Eeprom24C/EepromI2CBuffer.h"
+#include "Eeprom24C/Eeprom24CDependencies.h"
 
 namespace Eeprom24C
 {
-    bool WriteToI2C(const uint8_t id, const uint16_t deviceAddress, const uint16_t addressToWrite, const EepromI2CBuffer &i2cBuffer);
-    bool ReadFromI2C(const uint8_t id, const uint16_t deviceAddress, const uint16_t addressToRead, EepromI2CBuffer &i2cBuffer, const uint16_t size);
-    void DelayInMillisecond(const uint32_t durationInMillisecond);
-
-
     bool Eeprom24C32::ReadPageWithOffset(const uint8_t &id, const uint16_t &deviceAddress, const uint32_t page, const uint32_t offset, const uint32_t size, EepromBuffer &buffer)
     {
         bool bResult = false;

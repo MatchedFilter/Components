@@ -1,9 +1,9 @@
 #include "SHT3X/SHT31Sensor.h"
 #include "CrcUtils.h"
+#include "SHT3X/SHT3XDependencies.h"
 
 namespace SHT3X
 {
-    bool ReadFromI2C(const uint8_t id, const uint16_t deviceAddress, const uint16_t addressToRead, ShtBuffer &buffer, const uint16_t size);
     SHT31Sensor::SHT31Sensor(const uint8_t id) : 
         m_ID ( id ),
         m_I2CDeviceAddress ( static_cast<uint16_t>(0x44U << 1U) )

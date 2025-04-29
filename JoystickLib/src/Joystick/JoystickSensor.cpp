@@ -1,12 +1,9 @@
 #include "Joystick/JoystickSensor.h"
+#include "Joystick/JoystickDependencies.h"
 
 namespace Joystick
 {
-    void StartHorizontalAdc(const uint8_t id);
-    void StartVertialAdc(const uint8_t id);
-    void DelayInMillisecond(const uint32_t durationInMillisecond);
-    uint32_t ReadAdc(const uint8_t id);
-    uint8_t ReadSwitchState(const uint8_t id);
+
 
     JoystickSensor::JoystickSensor(const uint8_t id) : 
         m_ID ( id )

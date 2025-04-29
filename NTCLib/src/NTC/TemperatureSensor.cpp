@@ -1,10 +1,10 @@
 #include "NTC/TemperatureSensor.h"
 #include <cmath>
+#include "NTC/NTCDependencies.h"
 
 namespace NTC
 {
-    void StartAdc(const uint8_t id);
-    uint32_t ReadAdc(const uint8_t id);
+
 
     TemperatureSensor::TemperatureSensor(const uint8_t id) : 
         m_ID ( id )
