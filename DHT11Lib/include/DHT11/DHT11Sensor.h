@@ -8,7 +8,7 @@ namespace DHT11
     public:
         DHT11Sensor(const uint8_t id);
         ~DHT11Sensor();
-        uint8_t Read(double &temperatureInCelcius, double &humidityInPercentage);
+        bool Read(double &temperatureInCelcius, double &humidityInPercentage);
 
     private:
         const uint8_t m_ID;

@@ -18,8 +18,8 @@ namespace DHT11
     }
 
     static bool WaitForGivenOutputToChange(const uint8_t id, const uint8_t outputValue, const uint32_t minimumTimeDurationInMicroseconds, const uint32_t maximumTimeDurationInMicroseconds, uint32_t *durationInMicroseconds);
-    static uint8_t InitializeForReading(const uint8_t id);
-    static uint8_t ReadTemperatureAndHumidity(const uint8_t id, double &temperatureInCelcius, double &humidityInPercentage);
+    static bool InitializeForReading(const uint8_t id);
+    static bool ReadTemperatureAndHumidity(const uint8_t id, double &temperatureInCelcius, double &humidityInPercentage);
 
     static bool WaitForGivenOutputToChange(const uint8_t id, const uint8_t outputValue, const uint32_t minimumTimeDurationInMicroseconds, const uint32_t maximumTimeDurationInMicroseconds, uint32_t *durationInMicroseconds)
     {
@@ -58,14 +58,14 @@ namespace DHT11
         return bResult;
     }
 
-    static uint8_t InitializeForReading(const uint8_t id)
+    static bool InitializeForReading(const uint8_t id)
     {
         constexpr uint32_t INITIALIZATION_HIGH_TIMEOUT_IN_MILLISECOND = static_cast<uint32_t>(5UL);
         constexpr uint32_t INITIALIZATION_LOW_TIMEOUT_IN_MILLISECOND = static_cast<uint32_t>(18UL);
         constexpr uint32_t INITIALIZATION_MIN_OUTPUT_TIME_IN_MICROSECONDS = static_cast<uint32_t>(75UL);
         constexpr uint32_t INITIALIZATION_MAX_OUTPUT_TIME_IN_MICROSECONDS = static_cast<uint32_t>(85UL);
         
-        uint8_t result = 0x00U;
+        bool bResult = false;
         SetDataPinAsOutput(id);
         // SetDataPinAsHigh(id);
         DelayInMillisecond(INITIALIZATION_HIGH_TIMEOUT_IN_MILLISECOND);
@@ -79,31 +79,19 @@ namespace DHT11
             {
                 if (WaitForGivenOutputToChange(id, HIGH_VALUE, INITIALIZATION_MIN_OUTPUT_TIME_IN_MICROSECONDS, INITIALIZATION_MAX_OUTPUT_TIME_IN_MICROSECONDS, nullptr))
                 {
-                    result = 0x00U;
-                }
-                else
-                {
-                    result = 0x01U;
+                    bResult = true;
                 }
             }
-            else
-            {
-                result = 0x02U;
-            }
-        }
-        else
-        {
-            result = 0x03U;
         }
 
-        return result;
+        return bResult;
     }
 
-    static uint8_t ReadTemperatureAndHumidity(const uint8_t id, double &temperatureInCelcius, double &humidityInPercentage)
+    static bool ReadTemperatureAndHumidity(const uint8_t id, double &temperatureInCelcius, double &humidityInPercentage)
     {
         constexpr uint32_t DATA_SIZE = static_cast<uint32_t>(40UL);
 
-        uint8_t result = 0x08U;
+        bool bResult = false;
         uint8_t data[DATA_SIZE] = { 0 };
         bool bIsDataRead = true;
         for (uint32_t i = static_cast<uint32_t>(0UL); i < DATA_SIZE; i++)
@@ -112,14 +100,12 @@ namespace DHT11
             constexpr uint32_t INPUT_HIGH_DATA_MAX_DURATION_IN_MICROSECOND = static_cast<uint32_t>(80UL);
             if (false == WaitForGivenOutputToChange(id, LOW_VALUE, MIN_WAIT_TIME_FOR_OUTPUT_IN_MICROSECONDS, MAX_WAIT_TIME_FOR_OUTPUT_IN_MICROSECONDS, nullptr))
             {
-                result = 0x04U;
                 bIsDataRead = false;
                 break;
             }
             uint32_t durationInMicroSeconds;
             if (false == WaitForGivenOutputToChange(id, HIGH_VALUE, MIN_WAIT_TIME_FOR_OUTPUT_IN_MICROSECONDS, MAX_WAIT_TIME_FOR_OUTPUT_IN_MICROSECONDS, &durationInMicroSeconds))
             {
-                result = 0x05U;
                 bIsDataRead = false;
                 break;
             }
@@ -133,7 +119,6 @@ namespace DHT11
             }
             else
             {
-                result = 0x06U;
                 bIsDataRead = false;
                 break;
             }
@@ -194,28 +179,23 @@ namespace DHT11
             const uint8_t calculatedCrc = static_cast<uint8_t>(crcData[0] + crcData[1] + crcData[2] + crcData[3]);
             if (calculatedCrc == crcValue)
             {
-                result = 0x00U;
+                bResult = true;
                 humidityInPercentage =  static_cast<double>(humidityHighData) + (static_cast<double>(humidityLowData) / 100.0F); 
                 temperatureInCelcius =  static_cast<double>(temperatureHighData) + (static_cast<double>(temperatureLowData) / 100.0F); 
             }
-            else
-            {
-                result = 0x07U;
-            }
         }
-        return result;
+        return bResult;
     }
 
-    uint8_t DHT11Sensor::Read(double &temperatureInCelcius, double &humidityInPercentage)
+    bool DHT11Sensor::Read(double &temperatureInCelcius, double &humidityInPercentage)
     {
-        uint8_t result;
+        bool bResult = false;
         StartTimer(m_ID);
-        result = InitializeForReading(m_ID);
-        if (0x00U == result)
+        if ( InitializeForReading(m_ID))
         {
-            result = ReadTemperatureAndHumidity(m_ID, temperatureInCelcius, humidityInPercentage);
+            bResult = ReadTemperatureAndHumidity(m_ID, temperatureInCelcius, humidityInPercentage);
         }
         StopTimer(m_ID);
-        return result;
+        return bResult;
     }
 } // namespace DHT11
