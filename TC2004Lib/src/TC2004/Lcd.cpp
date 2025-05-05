@@ -15,6 +15,7 @@ namespace TC2004
         constexpr uint8_t LOWER_U_OFFSET = 8U;
         constexpr uint8_t LOWER_O_OFFSET = 16U;
         constexpr uint8_t LOWER_G_OFFSET = 24U;
+        constexpr uint8_t LOWER_C_OFFSET = 32U;
         constexpr uint8_t SPECIAL_CHAR_BYTE_COUNT = 8U;
     
         constexpr uint8_t SPECIAL_CHAR_LOWER_I[SPECIAL_CHAR_BYTE_COUNT] = { 
@@ -32,6 +33,12 @@ namespace TC2004
         constexpr uint8_t SPECIAL_CHAR_LOWER_G[SPECIAL_CHAR_BYTE_COUNT] = {
             0x00U, 0x0EU, 0x00 ,0x0EU, 0x0AU, 0x0EU, 0x02U, 0x0EU
         };
+
+        constexpr uint8_t SPECIAL_CHAR_LOWER_C[SPECIAL_CHAR_BYTE_COUNT] = {
+            0x00U, 0x00U, 0x0EU, 0x10U, 0x10U, 0x11U, 0x0EU, 0x04U
+        };
+
+
     
         bool bResult = SendCommand(id, SPECIAL_CHAR_BASE_ADDRESS + LOWER_I_OFFSET);
         DelayInMillisecond(static_cast<uint32_t>(1UL));
@@ -96,6 +103,24 @@ namespace TC2004
                 if (bResult)
                 {
                     bResult = SendData(id, SPECIAL_CHAR_LOWER_G[i]);
+                    DelayInMillisecond(static_cast<uint32_t>(1UL));
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+
+        if (bResult)
+        {
+            bResult = SendCommand(id, SPECIAL_CHAR_BASE_ADDRESS + LOWER_C_OFFSET);
+            DelayInMillisecond(static_cast<uint32_t>(1UL));
+            for (uint8_t i = 0; i < SPECIAL_CHAR_BYTE_COUNT; i++)
+            {
+                if (bResult)
+                {
+                    bResult = SendData(id, SPECIAL_CHAR_LOWER_C[i]);
                     DelayInMillisecond(static_cast<uint32_t>(1UL));
                 }
                 else
