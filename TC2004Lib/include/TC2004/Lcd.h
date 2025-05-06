@@ -8,6 +8,7 @@ namespace TC2004
     constexpr uint8_t TC2004_CHAR_LOWER_O = 0x02U;
     constexpr uint8_t TC2004_CHAR_LOWER_G = 0x03U;
     constexpr uint8_t TC2004_CHAR_LOWER_C = 0x04U;
+    constexpr uint8_t TC2004_CHAR_UPPER_O = 0x05U;
     constexpr uint8_t TC2004_CHAR_DEGREE_SYMBOL = 0xDFU;
     constexpr uint8_t TC2004_CHAR_ARROW_SYMBOL = 0x7EU;
 

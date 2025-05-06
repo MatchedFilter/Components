@@ -16,6 +16,7 @@ namespace TC2004
         constexpr uint8_t LOWER_O_OFFSET = 16U;
         constexpr uint8_t LOWER_G_OFFSET = 24U;
         constexpr uint8_t LOWER_C_OFFSET = 32U;
+        constexpr uint8_t UPPER_O_OFFSET = 40U;
         constexpr uint8_t SPECIAL_CHAR_BYTE_COUNT = 8U;
     
         constexpr uint8_t SPECIAL_CHAR_LOWER_I[SPECIAL_CHAR_BYTE_COUNT] = { 
@@ -38,8 +39,10 @@ namespace TC2004
             0x00U, 0x00U, 0x0EU, 0x10U, 0x10U, 0x11U, 0x0EU, 0x04U
         };
 
+        constexpr uint8_t SPECIAL_CHAR_UPPER_O[SPECIAL_CHAR_BYTE_COUNT] = {
+            0x0AU, 0x0EU, 0x11U, 0x11U, 0x11U, 0x11U, 0x0EU, 0x00U
+        };
 
-    
         bool bResult = SendCommand(id, SPECIAL_CHAR_BASE_ADDRESS + LOWER_I_OFFSET);
         DelayInMillisecond(static_cast<uint32_t>(1UL));
             if (bResult)
@@ -121,6 +124,24 @@ namespace TC2004
                 if (bResult)
                 {
                     bResult = SendData(id, SPECIAL_CHAR_LOWER_C[i]);
+                    DelayInMillisecond(static_cast<uint32_t>(1UL));
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+
+        if (bResult)
+        {
+            bResult = SendCommand(id, SPECIAL_CHAR_BASE_ADDRESS + UPPER_O_OFFSET);
+            DelayInMillisecond(static_cast<uint32_t>(1UL));
+            for (uint8_t i = 0; i < SPECIAL_CHAR_BYTE_COUNT; i++)
+            {
+                if (bResult)
+                {
+                    bResult = SendData(id, SPECIAL_CHAR_UPPER_O[i]);
                     DelayInMillisecond(static_cast<uint32_t>(1UL));
                 }
                 else
@@ -268,7 +289,7 @@ namespace TC2004
             {
                 (void) SendCommand(m_ID, 0x8FU);
                 DelayInMillisecond(static_cast<uint32_t>(1UL));
-                const uint8_t restShiftSize = 5U + columnPart;
+                const uint8_t restShiftSize = 5U + column;
                 for (uint8_t i = 0U; i < restShiftSize; i++)
                 {
                     constexpr uint8_t SET_CURSOR_TO_NEXT_CHAR_COMMAND = 0x14U;
@@ -285,7 +306,7 @@ namespace TC2004
             {
                 (void) SendCommand(m_ID, 0x8FU);
                 DelayInMillisecond(static_cast<uint32_t>(1UL));
-                const uint8_t restShiftSize = 5U + columnPart;
+                const uint8_t restShiftSize = 5U + column;
                 for (uint8_t i = 0U; i < restShiftSize; i++)
                 {
                     constexpr uint8_t SET_CURSOR_TO_NEXT_CHAR_COMMAND = 0x14U;
@@ -302,7 +323,7 @@ namespace TC2004
             {
                 (void) SendCommand(m_ID, 0xCFU);
                 DelayInMillisecond(static_cast<uint32_t>(1UL));
-                const uint8_t restShiftSize = 5U + columnPart;
+                const uint8_t restShiftSize = 5U + column;
                 for (uint8_t i = 0U; i < restShiftSize; i++)
                 {
                     constexpr uint8_t SET_CURSOR_TO_NEXT_CHAR_COMMAND = 0x14U;
