@@ -24,11 +24,11 @@ namespace TC2004
         Lcd(const uint8_t id);
         ~Lcd();
         bool Initialize(const bool bMultiLinesUsed);
-        void Print(const String80 &str);
-        void Print(const String80 &&str);
-        void Print(const uint8_t specialChar);
-        void MoveCursor(const uint8_t lineNumber, const uint8_t column);
-        void Clear(void);
+        void Print(const String80 &str) const ;
+        void Print(const String80 &&str) const ;
+        void Print(const uint8_t specialChar) const;
+        void MoveCursor(const uint8_t lineNumber, const uint8_t column) const;
+        void Clear(void) const;
 
     private:
         const uint8_t m_ID;

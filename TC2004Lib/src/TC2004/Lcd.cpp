@@ -240,7 +240,7 @@ namespace TC2004
         return bResult;
     }
 
-    void Lcd::Print(const String80 &str)
+    void Lcd::Print(const String80 &str) const
     {
         for (uint32_t i = static_cast<uint32_t>(0UL); i < str.GetSize(); i++)
         {
@@ -249,7 +249,7 @@ namespace TC2004
         }
     }
 
-    void Lcd::Print(const String80 &&str)
+    void Lcd::Print(const String80 &&str) const
     {
         for (uint32_t i = static_cast<uint32_t>(0UL); i < str.GetSize(); i++)
         {
@@ -258,13 +258,13 @@ namespace TC2004
         }
     }
 
-    void Lcd::Print(const uint8_t specialChar)
+    void Lcd::Print(const uint8_t specialChar) const
     {
         (void) SendData(m_ID, specialChar);
         DelayInMillisecond(static_cast<uint32_t>(1UL));
     }
 
-    void Lcd::MoveCursor(const uint8_t lineNumber, const uint8_t column)
+    void Lcd::MoveCursor(const uint8_t lineNumber, const uint8_t column) const
     {
         const uint8_t columnPart = static_cast<uint8_t>(column & static_cast<uint8_t>(0x0FU));
         switch (lineNumber)
@@ -339,7 +339,7 @@ namespace TC2004
         }
     }
 
-    void Lcd::Clear(void)
+    void Lcd::Clear(void) const
     {
         (void) SendCommand(m_ID, CLEAR_SCREEN_COMMAND);
         DelayInMillisecond(static_cast<uint32_t>(2U));
