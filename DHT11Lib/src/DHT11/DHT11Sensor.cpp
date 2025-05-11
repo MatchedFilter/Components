@@ -61,9 +61,9 @@ namespace DHT11
     static bool InitializeForReading(const uint8_t id)
     {
         constexpr uint32_t INITIALIZATION_HIGH_TIMEOUT_IN_MILLISECOND = static_cast<uint32_t>(5UL);
-        constexpr uint32_t INITIALIZATION_LOW_TIMEOUT_IN_MILLISECOND = static_cast<uint32_t>(18UL);
-        constexpr uint32_t INITIALIZATION_MIN_OUTPUT_TIME_IN_MICROSECONDS = static_cast<uint32_t>(75UL);
-        constexpr uint32_t INITIALIZATION_MAX_OUTPUT_TIME_IN_MICROSECONDS = static_cast<uint32_t>(85UL);
+        constexpr uint32_t INITIALIZATION_LOW_TIMEOUT_IN_MILLISECOND = static_cast<uint32_t>(20UL);
+        constexpr uint32_t INITIALIZATION_MIN_OUTPUT_TIME_IN_MICROSECONDS = static_cast<uint32_t>(72UL);
+        constexpr uint32_t INITIALIZATION_MAX_OUTPUT_TIME_IN_MICROSECONDS = static_cast<uint32_t>(88UL);
         
         bool bResult = false;
         SetDataPinAsOutput(id);
@@ -96,7 +96,7 @@ namespace DHT11
         bool bIsDataRead = true;
         for (uint32_t i = static_cast<uint32_t>(0UL); i < DATA_SIZE; i++)
         {
-            constexpr uint32_t INPUT_LOW_DATA_MAX_DURATION_IN_MICROSECOND = static_cast<uint32_t>(30UL);
+            constexpr uint32_t INPUT_LOW_DATA_MAX_DURATION_IN_MICROSECOND = static_cast<uint32_t>(32UL);
             constexpr uint32_t INPUT_HIGH_DATA_MAX_DURATION_IN_MICROSECOND = static_cast<uint32_t>(80UL);
             if (false == WaitForGivenOutputToChange(id, LOW_VALUE, MIN_WAIT_TIME_FOR_OUTPUT_IN_MICROSECONDS, MAX_WAIT_TIME_FOR_OUTPUT_IN_MICROSECONDS, nullptr))
             {
