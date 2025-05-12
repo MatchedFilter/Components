@@ -24,6 +24,7 @@ namespace TC2004
         Lcd(const uint8_t id);
         ~Lcd();
         bool Initialize(const bool bMultiLinesUsed);
+        void TurnOff();
         void Print(const String80 &str) const ;
         void Print(const String80 &&str) const ;
         void Print(const uint8_t specialChar) const;

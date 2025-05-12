@@ -240,6 +240,13 @@ namespace TC2004
         return bResult;
     }
 
+    void Lcd::TurnOff()
+    {
+        constexpr uint8_t DISPLAY_OFF_COMMAND = 0x08U;
+        (void) SendCommand(m_ID, DISPLAY_OFF_COMMAND);
+        DelayInMillisecond(static_cast<uint32_t>(1UL));
+    }
+
     void Lcd::Print(const String80 &str) const
     {
         for (uint32_t i = static_cast<uint32_t>(0UL); i < str.GetSize(); i++)
